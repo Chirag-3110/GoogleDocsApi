@@ -1,0 +1,23 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Group @model {
+  id:ID!
+  GroupName:String! 
+  GroupDescription:String!
+  GroupImageUrlPath:String!
+  messages: [Message] @hasMany
+}
+
+type Message @model {
+  id:ID!
+  message:String!
+  createdAt:String!
+  groupMessagesId: ID! @index(name: "byfileName", queryField: "FileByGroupName")
+}
+
+type Subscription {
+  onMessagebyGroupId(groupMessagesId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}

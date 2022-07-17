@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-workflowsandbox-dev-191835-authRole",
+      "UnauthRoleArn": "arn:aws:iam::437749481831:role/amplify-workflowsandbox-dev-191835-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::437749481831:role/amplify-workflowsandbox-dev-191835-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-workflowsandbox-dev-191835-deployment",
+      "UnauthRoleName": "amplify-workflowsandbox-dev-191835-unauthRole",
+      "StackName": "amplify-workflowsandbox-dev-191835",
+      "StackId": "arn:aws:cloudformation:us-east-1:437749481831:stack/amplify-workflowsandbox-dev-191835/bdecdef0-c630-11ec-b719-120afc2c634b",
+      "AmplifyAppId": "d3clmz58ss0me8"
+    }
+  }
+}
