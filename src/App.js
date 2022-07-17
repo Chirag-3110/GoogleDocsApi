@@ -8,9 +8,7 @@ const API_Key="AIzaSyAzd2O1iX-Fj7w0UJheBaK8eVp8gDjCSLg";
 const DISCOVERY_DOC = 'https://docs.googleapis.com/$discovery/rest?version=v1';
 const SCOPES="https://www.googleapis.com/auth/documents.readonly";
 
-let tokenClient;
-let gapiInited = false;
-let gisInited = false;
+
 
 function App() {
 
