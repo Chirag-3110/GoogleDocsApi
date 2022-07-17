@@ -20,7 +20,7 @@ function App() {
       await gapi.client.init({
         apikey:API_Key,
         clientId:Client_ID,
-        discoveryDocs: [DISCOVERY_DOC],
+        // discoveryDocs: [DISCOVERY_DOC],
         scope:SCOPES
       });
       gapiInited = true;
