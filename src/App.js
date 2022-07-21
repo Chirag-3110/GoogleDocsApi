@@ -1,81 +1,48 @@
 import React,{useEffect,useState} from 'react'
 import './App.css';
-import Login from './Components/Login';
-import Logout from './Components/Logout';
-import { gapi} from 'gapi-script';
-const Client_ID="376014326376-vn2k9jsmaomo2osbgl6vqllllsn3ll46.apps.googleusercontent.com";
-const API_Key="AIzaSyAYL8O5uhjok8CeuqWxY5-idMLmNr-scNI";
-const DISCOVERY_DOC = 'https://docs.googleapis.com/$discovery/rest?version=v1';
-const SCOPES="https://www.googleapis.com/auth/documents.readonly";
-
 
 
 function App() {
 
-  const [docID,setdocId]=useState(null);
-  const [docsUrl,setDocsUrl]=useState(null);
-  useEffect(()=>{
-    async function start(){
-     try {
-      await gapi.client.init({
-        apikey:API_Key,
-        clientId:Client_ID,
-        // discoveryDocs: [DISCOVERY_DOC],
-        scope:SCOPES
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const [workflowList,setWorkFLowList]=useState([
+    {id:1,name:"Pizza"},
+    {id:2,name:"fries"},
+    {id:3,name:"hello"},
+    {id:4,name:"Hyy"},
+    {id:5,name:"Byyyy"},
+    {id:6,name:"Nice"},
+    {id:7,name:"burger"},
+  ])
+  const searchData = (searchItem) => {
+    setSearch(searchItem);
+    if (search != "") {
+      const searchedWorkflow = workflowList.filter((filteredWorkFLow) => {
+        return Object.values(filteredWorkFLow)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchItem.toLowerCase());
       });
-     } catch (error) {
-      console.log("error is"+error)
-     }
+      setSearchResult(searchedWorkflow);
+    } else {
+      setSearchResult(workflowList);
     }
-    gapi.load('client',start());
-    // gisLoaded()
-  },[]);
-
-// create a document under this user
-  function createFile(){
-    var accessoken=gapi.auth.getToken().access_token;
-    fetch(`https://docs.googleapis.com/v1/documents`,{
-      method:"POST",
-      headers:new Headers({'Authorization':"Bearer " + accessoken}),
-    }).then((res)=>{
-      return res.json();
-    }).then(function(val){
-// at this moment out document is created and we can use it newly or with existing files
-      setdocId(val.documentId)
-      console.log(val)
-      console.log("id",docID)
-    })
-    console.log(accessoken)
-  }
-
-  async function getDocument(){
-    // console.log(docID)
-    var accessoken=gapi.auth.getToken().access_token;
-    await fetch(`https://docs.googleapis.com/v1/documents/${docID}`,{
-      method:"GET",
-      headers:new Headers({'Authorization':"Bearer " + accessoken}),
-    })
-    .then((res)=>res.json())
-    .then((result)=>{
-      console.log("result",result)
-      setDocsUrl(`https://docs.google.com/document/d/${docID}/edit`)
-    })
-    .catch((error)=>{
-      console.log(error)
-    });
-  }
-
+  };
   return (
     <div className="App">
-      <h1>Google Cloud</h1>
       <div>
-        <Login/>
-        <Logout/>
-        <div style={{display:'flex',flexDirection:'column'}}>
-          {docsUrl==null?null:<iframe src={docsUrl} style={{width:'100%',height:600}} ></iframe>}
-          <button style={{width:200,height:50}} onClick={()=>createFile()}>create document</button>
-          <button style={{width:200,height:50}} onClick={()=>getDocument()}>Get document</button>
-        </div>
+          <input placeholder="Enter name" onChange={(search) => searchData(search.target.value)}/>
+          {
+            searchResult.length > 0 ? 
+            searchResult.map((item)=>(
+              <h1 key={item.id}>{item.name}</h1>
+            )) 
+            : 
+            workflowList.map((item)=>(
+              <h1 key={item.id}>{item.name}</h1>
+            ))
+          }
       </div>
     </div>
   );
